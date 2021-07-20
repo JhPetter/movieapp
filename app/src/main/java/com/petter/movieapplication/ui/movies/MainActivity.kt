@@ -1,7 +1,8 @@
-package com.petter.movieapplication
+package com.petter.movieapplication.ui.movies
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.petter.movieapplication.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
