@@ -17,6 +17,4 @@ class MovieServiceShouldTest {
         service.fetchMovies()
         verify(apiService, times(1)).fetchMovies()
     }
-
-
 }
