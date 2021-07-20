@@ -1,2 +1,5 @@
 rootProject.name = "MovieApplication"
 include ':app'
+include ':usecases'
+include ':entities'
+include ':datasource'
