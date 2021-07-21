@@ -1,7 +1,7 @@
 package com.petter.datasource.source
 
 import com.petter.datasource.mapper.MoviePageMapper
-import com.petter.datasource.mapper.MoviesMapper
+import com.petter.datasource.mapper.MoviesListMapper
 import com.petter.datasource.model.response.MoviesResponse
 import junit.framework.TestCase
 import org.junit.Test
@@ -9,8 +9,8 @@ import org.mockito.kotlin.mock
 
 class MoviePageMapperShould {
     private val moviePageResponse = MoviesResponse(1, arrayListOf(), 10, 20)
-    private val movieMapper: MoviesMapper = mock()
-    private val mapper = MoviePageMapper(movieMapper)
+    private val movieListMapper: MoviesListMapper = mock()
+    private val mapper = MoviePageMapper(movieListMapper)
     private val moviePage = mapper.invoke(moviePageResponse)
 
     @Test

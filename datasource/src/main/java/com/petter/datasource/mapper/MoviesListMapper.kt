@@ -4,7 +4,7 @@ import com.petter.datasource.model.response.MovieResponse
 import com.petter.entities.Movie
 import javax.inject.Inject
 
-class MoviesMapper @Inject constructor() : Function1<List<MovieResponse>, List<Movie>> {
+class MoviesListMapper @Inject constructor() : Function1<List<MovieResponse>, List<Movie>> {
     override fun invoke(response: List<MovieResponse>): List<Movie> {
         return response.map {
             Movie(

@@ -1,13 +1,13 @@
 package com.petter.datasource.source
 
-import com.petter.datasource.mapper.MoviesMapper
+import com.petter.datasource.mapper.MoviesListMapper
 import com.petter.datasource.model.response.MovieResponse
 import org.junit.Test
 import junit.framework.TestCase.assertEquals
 
-class MoviesMapperShould {
+class MovieListMapperShould {
     private val movieResponse = MovieResponse(1, "Ave fenix", "", 1, 1.3)
-    private val mapper = MoviesMapper()
+    private val mapper = MoviesListMapper()
     private val movies = mapper.invoke(arrayListOf(movieResponse))
     private val movie = movies[0]
 
