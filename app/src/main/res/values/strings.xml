@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">MovieApplication</string>
+    <string name="search">Search</string>
+    <string name="movies">Movies</string>
+    <string name="series">Series</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="top_rated">Top Rated</string>
+    <string name="popular">Popular</string>
 </resources>
