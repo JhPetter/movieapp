@@ -29,10 +29,8 @@ class MovieFragment : Fragment() {
             movieType = MovieType.valueOf(it.getString(MOVIE_TYPE, MovieType.MOVIES.name))
         }
         observeFlows()
-        with(viewModel) {
-            fetchPopularMovies(movieType)
-            fetchTopRateMovies(movieType)
-        }
+        viewModel.fetchMovies(movieType)
+
     }
 
     override fun onCreateView(
@@ -45,16 +43,33 @@ class MovieFragment : Fragment() {
         return binding.root
     }
 
-
     private fun observeFlows() {
         lifecycleScope.launchWhenStarted {
-            viewModel.topRateMovieListLiveData.collect {
+            viewModel.topRateMovieListSateFlow.collect {
                 topRateAdapter.items = it
             }
         }
         lifecycleScope.launchWhenStarted {
-            viewModel.popularMovieListLiveData.collect {
+            viewModel.popularMovieListStateFlow.collect {
                 popularAdapter.items = it
+            }
+        }
+
+        lifecycleScope.launchWhenStarted {
+
+        }
+        lifecycleScope.launchWhenStarted {
+            viewModel.moviesLoadingSateFlow.collect {
+                binding.movieShimmerTopRate.visibility = it
+            }
+        }
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.showMoviesSateFlow.collect {
+                with(binding) {
+                    moviePopular.visibility = it
+                    movieTopRated.visibility = it
+                }
             }
         }
     }

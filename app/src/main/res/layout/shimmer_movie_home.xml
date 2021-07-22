@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/shimmerHomeTitle"
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/bg_shimmer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/shimmerHomeImage"
+        android:layout_width="120dp"
+        android:layout_height="180dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_shimmer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/shimmerHomeTitle"
+        app:shapeAppearance="@style/ShapeAppearanceMovie" />
+
+    <View
+        android:id="@+id/shimmerHomeName"
+        android:layout_width="120dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_shimmer"
+        app:layout_constraintEnd_toEndOf="@id/shimmerHomeImage"
+        app:layout_constraintStart_toStartOf="@id/shimmerHomeImage"
+        app:layout_constraintTop_toBottomOf="@id/shimmerHomeImage" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/shimmerHomeImage2"
+        android:layout_width="120dp"
+        android:layout_height="180dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_shimmer"
+        app:layout_constraintStart_toEndOf="@id/shimmerHomeImage"
+        app:layout_constraintTop_toBottomOf="@id/shimmerHomeTitle"
+        app:shapeAppearance="@style/ShapeAppearanceMovie" />
+
+    <View
+        android:layout_width="120dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_shimmer"
+        app:layout_constraintEnd_toEndOf="@id/shimmerHomeImage2"
+        app:layout_constraintStart_toStartOf="@id/shimmerHomeImage2"
+        app:layout_constraintTop_toBottomOf="@id/shimmerHomeImage" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/shimmerHomeImage3"
+        android:layout_width="120dp"
+        android:layout_height="180dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_shimmer"
+        app:layout_constraintStart_toEndOf="@id/shimmerHomeImage2"
+        app:layout_constraintTop_toBottomOf="@id/shimmerHomeTitle"
+        app:shapeAppearance="@style/ShapeAppearanceMovie" />
+
+    <View
+        android:layout_width="120dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_shimmer"
+        app:layout_constraintEnd_toEndOf="@id/shimmerHomeImage3"
+        app:layout_constraintStart_toStartOf="@id/shimmerHomeImage3"
+        app:layout_constraintTop_toBottomOf="@id/shimmerHomeImage" />
+
+
+    <View
+        android:id="@+id/shimmerHomeTitle2"
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/bg_shimmer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/shimmerHomeName" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/shimmerHomeImagePopular"
+        android:layout_width="120dp"
+        android:layout_height="180dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_shimmer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/shimmerHomeTitle2"
+        app:shapeAppearance="@style/ShapeAppearanceMovie" />
+
+    <View
+        android:layout_width="120dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_shimmer"
+        app:layout_constraintEnd_toEndOf="@id/shimmerHomeImagePopular"
+        app:layout_constraintStart_toStartOf="@id/shimmerHomeImagePopular"
+        app:layout_constraintTop_toBottomOf="@id/shimmerHomeImagePopular" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/shimmerHomeImagePopular2"
+        android:layout_width="120dp"
+        android:layout_height="180dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_shimmer"
+        app:layout_constraintStart_toEndOf="@id/shimmerHomeImage"
+        app:layout_constraintTop_toBottomOf="@id/shimmerHomeTitle2"
+        app:shapeAppearance="@style/ShapeAppearanceMovie" />
+
+    <View
+        android:layout_width="120dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_shimmer"
+        app:layout_constraintEnd_toEndOf="@id/shimmerHomeImagePopular2"
+        app:layout_constraintStart_toStartOf="@id/shimmerHomeImagePopular2"
+        app:layout_constraintTop_toBottomOf="@id/shimmerHomeImagePopular2" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/shimmerHomeImagePopular3"
+        android:layout_width="120dp"
+        android:layout_height="180dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_shimmer"
+        app:layout_constraintStart_toEndOf="@id/shimmerHomeImage2"
+        app:layout_constraintTop_toBottomOf="@id/shimmerHomeTitle2"
+        app:shapeAppearance="@style/ShapeAppearanceMovie" />
+
+    <View
+        android:layout_width="120dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_shimmer"
+        app:layout_constraintEnd_toEndOf="@id/shimmerHomeImagePopular3"
+        app:layout_constraintStart_toStartOf="@id/shimmerHomeImagePopular3"
+        app:layout_constraintTop_toBottomOf="@id/shimmerHomeImagePopular3" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

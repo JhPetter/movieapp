@@ -1,7 +1,10 @@
 package com.petter.entities
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import java.util.*
 
+@Parcelize
 class Movie(
     var id: Int,
     var title: String,
@@ -12,4 +15,4 @@ class Movie(
     var voteAverage: Double,
     var bannerPath: String = "",
     var genres: List<String> = arrayListOf()
-)
+) : Parcelable
