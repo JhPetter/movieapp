@@ -11,7 +11,7 @@ class MovieUseCase @Inject constructor(private val iMoviesServiceRepository: IMo
     fun fetchMovies(movieType: MovieType, movieCategory: MovieCategory): Single<MoviePage> =
         iMoviesServiceRepository.fetchMovies(movieType, movieCategory)
 
-    fun fetchMovie(movieId: Int) = iMoviesServiceRepository.fetchMovie(movieId)
+    fun fetchMovie(movieId: Int,movieType: MovieType) = iMoviesServiceRepository.fetchMovie(movieId,movieType)
 
     fun searchMovies(query: String) = iMoviesServiceRepository.searchMovies(query)
 }

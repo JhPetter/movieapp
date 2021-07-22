@@ -58,7 +58,6 @@ class MainViewModel @Inject constructor(private val movieUseCase: MovieUseCase) 
                     _topRateMovieListLiveData.value = it.movies
                 },
                 onError = {
-                    println("Here")
                     println(it.stackTrace)
                 }
             )

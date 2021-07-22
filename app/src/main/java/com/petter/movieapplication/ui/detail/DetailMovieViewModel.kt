@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.petter.entities.Movie
+import com.petter.entities.MovieType
 import com.petter.usecases.usecase.MovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -21,10 +22,11 @@ class DetailMovieViewModel @Inject constructor(private val movieUseCase: MovieUs
     val movieLiveData: LiveData<Movie> get() = _movieLiveData
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
     private var movieId = 0
+    private var movieType: MovieType = MovieType.MOVIES
 
-    fun fetchMovieById(movieId: Int) {
+    fun fetchMovieById(movieId: Int, movieType: MovieType) {
         this.movieId = movieId
-        val single = movieUseCase.fetchMovie(movieId)
+        val single = movieUseCase.fetchMovie(movieId, movieType)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
@@ -32,7 +34,6 @@ class DetailMovieViewModel @Inject constructor(private val movieUseCase: MovieUs
                     _movieLiveData.postValue(it)
                 },
                 onError = {
-                    println("Here")
                     println(it.stackTrace)
                 }
             )

@@ -60,7 +60,7 @@ class MovieFragment : Fragment() {
     }
 
     private fun openDetail(movie: Movie) {
-        DetailActivity.start(requireContext(), movie.id)
+        DetailActivity.start(requireContext(), movie.id, movieType)
     }
 
     companion object {

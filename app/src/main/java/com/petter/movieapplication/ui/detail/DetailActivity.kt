@@ -7,9 +7,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.petter.entities.Movie
+import com.petter.entities.MovieType
 import com.petter.movieapplication.databinding.ActivityDetailBinding
-import com.petter.movieapplication.utils.MOVIE_ID
-import com.petter.movieapplication.utils.loadImage
+import com.petter.movieapplication.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,9 +18,10 @@ class DetailActivity : AppCompatActivity() {
     private val detailViewModel: DetailMovieViewModel by viewModels()
 
     companion object {
-        fun start(context: Context, movieId: Int) {
+        fun start(context: Context, movieId: Int, movieType: MovieType) {
             context.startActivity(Intent(context, DetailActivity::class.java).apply {
                 putExtra(MOVIE_ID, movieId)
+                putExtra(MOVIE_TYPE, movieType.name)
             })
         }
     }
@@ -35,10 +36,12 @@ class DetailActivity : AppCompatActivity() {
 
     private fun setUpView() {
         binding.detailBack.setOnClickListener { onBackPressed() }
-        detailViewModel.fetchMovieById(getMovieId())
+        detailViewModel.fetchMovieById(getMovieId(), getMovieType())
     }
 
     private fun getMovieId() = intent.getIntExtra(MOVIE_ID, 0)
+    private fun getMovieType() =
+        MovieType.valueOf(intent.getStringExtra(MOVIE_TYPE) ?: MovieType.MOVIES.name)
 
     private fun observe() {
         lifecycleScope.launchWhenStarted {
@@ -53,6 +56,8 @@ class DetailActivity : AppCompatActivity() {
             detailImage.loadImage("https://image.tmdb.org/t/p/w780/${movie.bannerPath}")
             detailTitle.text = movie.title
             detailSummary.text = movie.summary
+            detailChips.addChips(layoutInflater, movie.genres)
+            detailDate.text = movie.releaseDate?.formatMonthDayYear(this@DetailActivity)
         }
     }
 }

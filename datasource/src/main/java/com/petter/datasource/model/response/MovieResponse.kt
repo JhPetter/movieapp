@@ -10,7 +10,7 @@ class MovieResponse(
     @SerializedName("vote_average") var voteAverage: Double? = null,
     @SerializedName("genres") var genres: List<MovieGenresResponse>? = null,
     @SerializedName("overview") var summary: String? = null,
-    @SerializedName("release_date") var releaseDate: String? = null,
+    @SerializedName("release_date", alternate = ["last_air_date"]) var releaseDate: String? = null,
     @SerializedName("backdrop_path") var backdropPath: String? = null
 )
 

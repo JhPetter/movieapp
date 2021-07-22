@@ -1,5 +1,6 @@
 package com.petter.datasource.di
 
+import com.petter.datasource.mapper.GenresMapper
 import com.petter.datasource.mapper.MovieMapper
 import com.petter.datasource.mapper.MoviePageMapper
 import com.petter.datasource.mapper.MoviesListMapper
@@ -15,16 +16,19 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class ServiceModule {
+    @Provides
+    fun provideGenreMapper(): GenresMapper = GenresMapper()
 
     @Provides
-    fun provideMoviesListMapper(): MoviesListMapper = MoviesListMapper()
+    fun provideMovieMapper(genresMapper: GenresMapper): MovieMapper = MovieMapper(genresMapper)
+
+    @Provides
+    fun provideMoviesListMapper(movieMapper: MovieMapper): MoviesListMapper =
+        MoviesListMapper(movieMapper)
 
     @Provides
     fun provideMoviePageMapper(moviesListMapper: MoviesListMapper): MoviePageMapper =
         MoviePageMapper(moviesListMapper)
-
-    @Provides
-    fun provideMovieMapper(): MovieMapper = MovieMapper()
 
     @Provides
     fun provideMovieService(

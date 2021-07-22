@@ -26,8 +26,8 @@ class MovieService @Inject constructor(
             .onErrorResumeNext { Single.error(Exception("Its local exception")) }
     }
 
-    override fun fetchMovie(movieId: Int): Single<Movie> {
-        return iApiService.fetchMovie(movieId)
+    override fun fetchMovie(movieId: Int, movieType: MovieType): Single<Movie> {
+        return iApiService.fetchMovie(movieType.key, movieId)
             .map { movieMapper.invoke(it) }
             .onErrorResumeNext { Single.error(Exception("Its local exception")) }
     }
