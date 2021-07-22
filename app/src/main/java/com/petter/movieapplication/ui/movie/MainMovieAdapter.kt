@@ -7,7 +7,10 @@ import com.petter.entities.Movie
 import com.petter.movieapplication.databinding.RowMovieBinding
 import com.petter.movieapplication.utils.loadImage
 
-class MainMovieAdapter : RecyclerView.Adapter<MainMovieAdapter.MainMovieViewHolder>() {
+typealias MovieClickListener = (Movie) -> Unit
+
+class MainMovieAdapter(private val movieClickListener: MovieClickListener) :
+    RecyclerView.Adapter<MainMovieAdapter.MainMovieViewHolder>() {
 
     var items: List<Movie> = arrayListOf()
         set(value) {
@@ -17,7 +20,8 @@ class MainMovieAdapter : RecyclerView.Adapter<MainMovieAdapter.MainMovieViewHold
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainMovieViewHolder {
         return MainMovieViewHolder(
-            RowMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            RowMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+            movieClickListener
         )
     }
 
@@ -27,13 +31,18 @@ class MainMovieAdapter : RecyclerView.Adapter<MainMovieAdapter.MainMovieViewHold
 
     override fun getItemCount(): Int = items.size
 
-    class MainMovieViewHolder(private val binding: RowMovieBinding) :
+    class MainMovieViewHolder(
+        private val binding: RowMovieBinding,
+        private val movieClickListener: MovieClickListener
+    ) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Movie) {
             with(binding) {
                 movieTitle.text = item.title
-                movieDate.text = item.voteAverage.toString()
-                movieImage.loadImage("https://image.tmdb.org/t/p/w185/${item.posterPath}")
+                movieImage.loadImage("https://image.tmdb.org/t/p/w300/${item.posterPath}")
+            }
+            binding.root.setOnClickListener {
+                movieClickListener(item)
             }
         }
     }

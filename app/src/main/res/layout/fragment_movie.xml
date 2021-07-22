@@ -35,9 +35,10 @@
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/movieTopRated"
             tools:listitem="@layout/row_movie" />
-
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/moviePopular"
@@ -63,6 +64,8 @@
             android:paddingEnd="8dp"
             android:paddingBottom="32dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/moviePopular"
             tools:listitem="@layout/row_movie" />
     </androidx.constraintlayout.widget.ConstraintLayout>

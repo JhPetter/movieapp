@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.petter.entities.Movie
 import com.petter.entities.MovieType
 import com.petter.movieapplication.databinding.FragmentMovieBinding
+import com.petter.movieapplication.ui.detail.DetailActivity
 import com.petter.movieapplication.utils.MOVIE_TYPE
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -18,8 +20,8 @@ class MovieFragment : Fragment() {
     private lateinit var movieType: MovieType
     private lateinit var binding: FragmentMovieBinding
     private val viewModel: MainViewModel by viewModels()
-    private val topRateAdapter: MainMovieAdapter by lazy { MainMovieAdapter() }
-    private val popularAdapter: MainMovieAdapter by lazy { MainMovieAdapter() }
+    private val topRateAdapter: MainMovieAdapter by lazy { MainMovieAdapter(this::openDetail) }
+    private val popularAdapter: MainMovieAdapter by lazy { MainMovieAdapter(this::openDetail) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +57,10 @@ class MovieFragment : Fragment() {
                 popularAdapter.items = it
             }
         }
+    }
+
+    private fun openDetail(movie: Movie) {
+        DetailActivity.start(requireContext(), movie.id)
     }
 
     companion object {

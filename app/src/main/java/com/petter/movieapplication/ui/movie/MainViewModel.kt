@@ -29,6 +29,7 @@ class MainViewModel @Inject constructor(private val movieUseCase: MovieUseCase) 
     val topRateMovieListLiveData: StateFlow<List<Movie>> get() = _topRateMovieListLiveData
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
+    private val loading: Boolean = false
 
 
     fun fetchPopularMovies(movieType: MovieType) {
