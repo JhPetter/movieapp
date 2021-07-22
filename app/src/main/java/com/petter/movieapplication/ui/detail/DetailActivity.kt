@@ -11,6 +11,7 @@ import com.petter.entities.MovieType
 import com.petter.movieapplication.databinding.ActivityDetailBinding
 import com.petter.movieapplication.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class DetailActivity : AppCompatActivity() {
@@ -47,6 +48,21 @@ class DetailActivity : AppCompatActivity() {
         lifecycleScope.launchWhenStarted {
             detailViewModel.movieLiveData.observe(this@DetailActivity) {
                 configMovie(it)
+            }
+        }
+
+        lifecycleScope.launchWhenStarted {
+            detailViewModel.detailLoadingSateFlow.collect {
+                binding.shimmerDetail.visibility = it
+            }
+        }
+
+        lifecycleScope.launchWhenStarted {
+            detailViewModel.detailDataSateFlow.collect {
+                with(binding) {
+                    detailBack.visibility = it
+                    detailTitleSummary.visibility = it
+                }
             }
         }
     }

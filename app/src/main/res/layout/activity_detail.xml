@@ -92,12 +92,21 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:lineSpacingExtra="6dp"
-            android:text="@string/summary"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/detailTitleSummary"
             tools:text="Natasha Romanoff, also known as Black Widow, confronts the darker parts of her ledger when a dangerous conspiracy with ties to her past arises. Pursued by a force that will stop at nothing to bring her down, Natasha must deal with her history as a spy and the broken relationships left in her wake long before she became an Avenger." />
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include layout="@layout/shimmer_detail_movie" />
+        </com.facebook.shimmer.ShimmerFrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.core.widget.NestedScrollView>
