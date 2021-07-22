@@ -5,27 +5,56 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.petter.entities.MovieType
-import com.petter.movieapplication.R
+import com.petter.movieapplication.databinding.FragmentMovieBinding
 import com.petter.movieapplication.utils.MOVIE_TYPE
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
+@AndroidEntryPoint
 class MovieFragment : Fragment() {
     private lateinit var movieType: MovieType
-
+    private lateinit var binding: FragmentMovieBinding
+    private val viewModel: MainViewModel by viewModels()
+    private val topRateAdapter: MainMovieAdapter by lazy { MainMovieAdapter() }
+    private val popularAdapter: MainMovieAdapter by lazy { MainMovieAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             movieType = MovieType.valueOf(it.getString(MOVIE_TYPE, MovieType.MOVIES.name))
         }
+        observeFlows()
+        with(viewModel) {
+            fetchPopularMovies(movieType)
+            fetchTopRateMovies(movieType)
+        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_movie, container, false)
+    ): View {
+        binding = FragmentMovieBinding.inflate(inflater, container, false)
+        binding.movieTopRatedRecyclerView.adapter = topRateAdapter
+        binding.moviePopularRecyclerView.adapter = popularAdapter
+        return binding.root
+    }
+
+
+    private fun observeFlows() {
+        lifecycleScope.launchWhenStarted {
+            viewModel.topRateMovieListLiveData.collect {
+                topRateAdapter.items = it
+            }
+        }
+        lifecycleScope.launchWhenStarted {
+            viewModel.popularMovieListLiveData.collect {
+                popularAdapter.items = it
+            }
+        }
     }
 
     companion object {

@@ -6,6 +6,7 @@ import com.petter.datasource.mapper.MoviesListMapper
 import com.petter.datasource.model.response.MoviesResponse
 import com.petter.datasource.service.ApiService
 import com.petter.entities.MovieCategory
+import com.petter.entities.MovieType
 import io.reactivex.rxjava3.core.Single
 import org.junit.Test
 import org.mockito.kotlin.mock
@@ -22,20 +23,21 @@ class MovieListServiceShouldTest {
 
 
     private val movieCategory: MovieCategory = mock()
+    private val movieType: MovieType = mock()
     private val runtimeException = RuntimeException("Its local exception")
     private val moviesResponse: MoviesResponse = MoviesResponse(1, arrayListOf(), 10, 20)
 
     @Test
     fun fetchMoviesFromApi() {
         mockSuccessCase()
-        movieService.fetchMovies(movieCategory)
-        verify(apiService, times(1)).fetchMovies(movieCategory.name)
+        movieService.fetchMovies(movieType, movieCategory)
+        verify(apiService, times(1)).fetchMovies(movieType.key, movieCategory.key)
     }
 
     @Test
     fun fetchMoviesFromApiSuccessful() {
         mockSuccessCase()
-        val result = movieService.fetchMovies(movieCategory).test()
+        val result = movieService.fetchMovies(movieType, movieCategory).test()
         result.assertComplete()
             .assertNoErrors()
     }
@@ -43,7 +45,7 @@ class MovieListServiceShouldTest {
     @Test
     fun propagateErrors() {
         val result = mockErrorCase()
-        val single = result.fetchMovies(movieCategory).test()
+        val single = result.fetchMovies(movieType, movieCategory).test()
         single
             .assertError { it.message == runtimeException.message }
             .assertNotComplete()
@@ -51,20 +53,28 @@ class MovieListServiceShouldTest {
 
     @Test
     fun delegateDataToMapper() {
-        whenever(apiService.fetchMovies(movieCategory.name)).thenReturn(Single.just(moviesResponse))
+        whenever(apiService.fetchMovies(movieType.key, movieCategory.key)).thenReturn(
+            Single.just(
+                moviesResponse
+            )
+        )
         val moviePagerMapper: MoviePageMapper = mock()
         val service = MovieService(apiService, moviePagerMapper, movieMapper)
-        service.fetchMovies(movieCategory).test()
+        service.fetchMovies(movieType, movieCategory).test()
         verify(moviePagerMapper, times(1)).invoke(moviesResponse)
     }
 
     private fun mockSuccessCase() {
-        whenever(apiService.fetchMovies(movieCategory.name)).thenReturn(Single.just(moviesResponse))
+        whenever(apiService.fetchMovies(movieType.key, movieCategory.key)).thenReturn(
+            Single.just(
+                moviesResponse
+            )
+        )
         movieService = MovieService(apiService, moviePageMapper, movieMapper)
     }
 
     private fun mockErrorCase(): MovieService {
-        whenever(apiService.fetchMovies(movieCategory.name)).thenReturn(
+        whenever(apiService.fetchMovies(movieType.key, movieCategory.key)).thenReturn(
             Single.error(runtimeException)
         )
         return MovieService(apiService, moviePageMapper, movieMapper)

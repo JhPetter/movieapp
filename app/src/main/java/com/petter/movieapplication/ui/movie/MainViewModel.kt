@@ -3,6 +3,7 @@ package com.petter.movieapplication.ui.movie
 import androidx.lifecycle.ViewModel
 import com.petter.entities.Movie
 import com.petter.entities.MovieCategory
+import com.petter.entities.MovieType
 import com.petter.usecases.usecase.MovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -16,23 +17,48 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(private val movieUseCase: MovieUseCase) : ViewModel() {
-    private val _movieListLiveData: MutableStateFlow<List<Movie>> by lazy {
+    private val _popularMovieListLiveData: MutableStateFlow<List<Movie>> by lazy {
         MutableStateFlow(arrayListOf())
     }
-    val movieListLiveData: StateFlow<List<Movie>> get() = _movieListLiveData
+    val popularMovieListLiveData: StateFlow<List<Movie>> get() = _popularMovieListLiveData
+
+
+    private val _topRateMovieListLiveData: MutableStateFlow<List<Movie>> by lazy {
+        MutableStateFlow(arrayListOf())
+    }
+    val topRateMovieListLiveData: StateFlow<List<Movie>> get() = _topRateMovieListLiveData
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
-    fun fetchMovies() {
-        val single = movieUseCase.fetchMovies(MovieCategory.POPULAR)
+
+    fun fetchPopularMovies(movieType: MovieType) {
+        val single = movieUseCase.fetchMovies(movieType, MovieCategory.POPULAR)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
                 onSuccess = {
-                    _movieListLiveData.value = it.movies
+                    _popularMovieListLiveData.value = it.movies
                 },
                 onError = {
+                    println("Here")
+                    println(it.stackTrace)
+                }
+            )
 
+        single.addTo(compositeDisposable)
+    }
+
+    fun fetchTopRateMovies(movieType: MovieType) {
+        val single = movieUseCase.fetchMovies(movieType, MovieCategory.TOP_RATE)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
+                onSuccess = {
+                    _topRateMovieListLiveData.value = it.movies
+                },
+                onError = {
+                    println("Here")
+                    println(it.stackTrace)
                 }
             )
 

@@ -5,7 +5,6 @@ import com.petter.datasource.mapper.MoviePageMapper
 import com.petter.datasource.mapper.MoviesListMapper
 import com.petter.datasource.model.response.MoviesResponse
 import com.petter.datasource.service.ApiService
-import com.petter.entities.MovieCategory
 import io.reactivex.rxjava3.core.Single
 import org.junit.Test
 import org.mockito.kotlin.mock

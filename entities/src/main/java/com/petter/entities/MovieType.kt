@@ -1,5 +1,5 @@
 package com.petter.entities
 
-enum class MovieType(name: String) {
+enum class MovieType(val key: String) {
     MOVIES("movie"), TV("tv")
 }
