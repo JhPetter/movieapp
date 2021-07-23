@@ -68,8 +68,8 @@ class MovieFragment : Fragment() {
     private fun observeFlows() {
         lifecycleScope.launchWhenStarted {
             viewModel.movieVOStateFlow.collect {
-                popularAdapter.items = it.popularMovies
-                topRateAdapter.items = it.topRateMovies
+                popularAdapter.submitList(it.popularMovies)
+                topRateAdapter.submitList(it.topRateMovies)
             }
         }
         lifecycleScope.launchWhenStarted {

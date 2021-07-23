@@ -7,16 +7,15 @@
     android:background="@color/primary"
     tools:context=".ui.list.ListMovieActivity">
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/listSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:focusable="false"
-        android:imeOptions="actionSearch"
-        android:textColor="@color/white"
+        android:background="@drawable/bg_search"
+        android:paddingBottom="6dp"
         android:textColorHint="@color/light"
         android:textSize="16sp"
         android:textStyle="bold"

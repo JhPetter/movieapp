@@ -19,9 +19,9 @@ class MovieService @Inject constructor(
 
     override fun fetchMovies(
         movieType: MovieType,
-        movieCategory: MovieCategory
+        movieCategory: MovieCategory, page: Int
     ): Single<MoviePage> {
-        return iApiService.fetchMovies(movieType.key, movieCategory.key)
+        return iApiService.fetchMovies(movieType.key, movieCategory.key, page)
             .map { moviePageMapper.invoke(it) }
             .onErrorResumeNext { Single.error(Exception("Its local exception")) }
     }

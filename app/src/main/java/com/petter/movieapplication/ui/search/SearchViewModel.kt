@@ -25,7 +25,6 @@ class SearchViewModel @Inject constructor(private val movieUseCase: MovieUseCase
     private var movieType: MovieType = MovieType.MOVIES
     private var lastMoviePage: MoviePage? = null
     private var query: String = ""
-    private var currentPageConsulting: Int = 1
 
     private var mutableList: MutableList<Movie> = mutableListOf()
 
@@ -68,7 +67,6 @@ class SearchViewModel @Inject constructor(private val movieUseCase: MovieUseCase
 
     private fun clearData() {
         lastMoviePage = null
-        currentPageConsulting = 1
         mutableList.clear()
         _myMoviesLiveData.postValue(mutableList)
     }

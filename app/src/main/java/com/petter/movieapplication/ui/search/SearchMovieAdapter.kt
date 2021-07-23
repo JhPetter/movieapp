@@ -14,10 +14,6 @@ typealias SearchItemClickListener = (Movie) -> Unit
 class SearchMovieAdapter(private val searchItemClickListener: SearchItemClickListener) :
     ListAdapter<Movie, SearchMovieAdapter.SearchViewHolder>(DiffCallback()) {
 
-    fun addData(list: List<Movie>) {
-        submitList(list)
-        notifyDataSetChanged()
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         return SearchViewHolder(

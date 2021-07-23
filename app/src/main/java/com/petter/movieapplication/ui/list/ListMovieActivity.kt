@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.petter.entities.Movie
 import com.petter.entities.MovieCategory
 import com.petter.entities.MovieType
@@ -14,11 +13,11 @@ import com.petter.movieapplication.databinding.ActivityListMovieBinding
 import com.petter.movieapplication.ui.detail.DetailActivity
 import com.petter.movieapplication.ui.movie.MainMovieAdapter
 import com.petter.movieapplication.ui.search.SearchMovieActivity
+import com.petter.movieapplication.utils.EndLessRecycler
 import com.petter.movieapplication.utils.MOVIES
 import com.petter.movieapplication.utils.MOVIE_CATEGORY
 import com.petter.movieapplication.utils.MOVIE_TYPE
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class ListMovieActivity : AppCompatActivity() {
@@ -55,6 +54,11 @@ class ListMovieActivity : AppCompatActivity() {
     private fun setUpView() {
         with(binding.listRecycler) {
             adapter = movieAdapter
+            addOnScrollListener(object : EndLessRecycler() {
+                override fun onLoadNextPage() {
+                    listViewModel.loadNextPage()
+                }
+            })
         }
         with(binding.listSearch) {
             hint = "${getString(R.string.search)} ${movieType.name.lowercase()}"
@@ -77,10 +81,8 @@ class ListMovieActivity : AppCompatActivity() {
     }
 
     private fun observe() {
-        lifecycleScope.launchWhenStarted {
-            listViewModel.popularMovieListStateFlow.collect {
-                movieAdapter.items = it
-            }
+        listViewModel.myMoviesLiveData.observe(this) {
+            movieAdapter.submitList(ArrayList(it))
         }
     }
 

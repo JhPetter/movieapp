@@ -2,6 +2,8 @@ package com.petter.movieapplication.ui.movie
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.petter.entities.Movie
 import com.petter.movieapplication.databinding.RowMovieBinding
@@ -10,13 +12,7 @@ import com.petter.movieapplication.utils.loadImage
 typealias MovieClickListener = (Movie) -> Unit
 
 class MainMovieAdapter(private val movieClickListener: MovieClickListener) :
-    RecyclerView.Adapter<MainMovieAdapter.MainMovieViewHolder>() {
-
-    var items: List<Movie> = arrayListOf()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+    ListAdapter<Movie, MainMovieAdapter.MainMovieViewHolder>(MoviesDiffUtilCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainMovieViewHolder {
         return MainMovieViewHolder(
@@ -26,10 +22,9 @@ class MainMovieAdapter(private val movieClickListener: MovieClickListener) :
     }
 
     override fun onBindViewHolder(holder: MainMovieViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(getItem(position))
     }
 
-    override fun getItemCount(): Int = items.size
 
     class MainMovieViewHolder(
         private val binding: RowMovieBinding,
@@ -45,5 +40,15 @@ class MainMovieAdapter(private val movieClickListener: MovieClickListener) :
                 movieClickListener(item)
             }
         }
+    }
+}
+
+class MoviesDiffUtilCallBack : DiffUtil.ItemCallback<Movie>() {
+    override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+        return oldItem == newItem
     }
 }

@@ -59,7 +59,7 @@ class SearchMovieActivity : AppCompatActivity() {
 
     private fun observer() {
         searchViewModel.myMoviesLiveData.observe(this) {
-            movieAdapter.addData(it)
+            movieAdapter.submitList(ArrayList(it))
         }
     }
 

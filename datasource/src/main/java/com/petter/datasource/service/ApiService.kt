@@ -11,7 +11,8 @@ interface ApiService {
     @GET("{movieType}/{category}")
     fun fetchMovies(
         @Path("movieType") movieType: String,
-        @Path("category") category: String
+        @Path("category") category: String,
+        @Query("page") page: Int
     ): Single<MoviesResponse>
 
     @GET("{movieType}/{movieId}")
