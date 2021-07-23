@@ -13,7 +13,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/movieTopRated"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
@@ -22,9 +22,20 @@
             android:textColor="@color/white"
             android:textStyle="normal"
             android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@id/movieSeeAllTopRated"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:visibility="visible" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/movieSeeAllTopRated"
+            android:layout_width="?actionBarSize"
+            android:layout_height="20dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_arrow_right"
+            app:layout_constraintBottom_toBottomOf="@id/movieTopRated"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/movieTopRated" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/movieTopRatedRecyclerView"
@@ -56,7 +67,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/moviePopular"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
@@ -65,9 +76,20 @@
             android:textColor="@color/white"
             android:textStyle="normal"
             android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@id/movieSeeAllPopular"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/movieTopRatedRecyclerView"
             tools:visibility="visible" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/movieSeeAllPopular"
+            android:layout_width="?actionBarSize"
+            android:layout_height="20dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_arrow_right"
+            app:layout_constraintBottom_toBottomOf="@id/moviePopular"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/moviePopular" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/moviePopularRecyclerView"

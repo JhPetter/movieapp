@@ -8,9 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.petter.entities.Movie
+import com.petter.entities.MovieCategory
 import com.petter.entities.MovieType
 import com.petter.movieapplication.databinding.FragmentMovieBinding
 import com.petter.movieapplication.ui.detail.DetailActivity
+import com.petter.movieapplication.ui.list.ListMovieActivity
 import com.petter.movieapplication.utils.MOVIE_TYPE
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -38,9 +40,29 @@ class MovieFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMovieBinding.inflate(inflater, container, false)
-        binding.movieTopRatedRecyclerView.adapter = topRateAdapter
-        binding.moviePopularRecyclerView.adapter = popularAdapter
+        setUpView()
         return binding.root
+    }
+
+    private fun setUpView() {
+        with(binding) {
+            movieTopRatedRecyclerView.adapter = topRateAdapter
+            moviePopularRecyclerView.adapter = popularAdapter
+            movieSeeAllTopRated.setOnClickListener {
+                openFullList(
+                    ArrayList(viewModel.topRateMovieListSateFlow.value),
+                    MovieCategory.TOP_RATE,
+                    movieType
+                )
+            }
+            movieSeeAllPopular.setOnClickListener {
+                openFullList(
+                    ArrayList(viewModel.popularMovieListStateFlow.value),
+                    MovieCategory.POPULAR,
+                    movieType
+                )
+            }
+        }
     }
 
     private fun observeFlows() {
@@ -54,7 +76,6 @@ class MovieFragment : Fragment() {
                 popularAdapter.items = it
             }
         }
-
         lifecycleScope.launchWhenStarted {
 
         }
@@ -63,12 +84,13 @@ class MovieFragment : Fragment() {
                 binding.movieShimmerTopRate.visibility = it
             }
         }
-
         lifecycleScope.launchWhenStarted {
             viewModel.showMoviesSateFlow.collect {
                 with(binding) {
                     moviePopular.visibility = it
                     movieTopRated.visibility = it
+                    movieSeeAllPopular.visibility = it
+                    movieSeeAllTopRated.visibility = it
                 }
             }
         }
@@ -76,6 +98,15 @@ class MovieFragment : Fragment() {
 
     private fun openDetail(movie: Movie) {
         DetailActivity.start(requireContext(), movie.id, movieType)
+    }
+
+    private fun openFullList(movies: ArrayList<Movie>, category: MovieCategory, type: MovieType) {
+        ListMovieActivity.start(
+            requireContext(),
+            movies,
+            category,
+            type
+        )
     }
 
     companion object {

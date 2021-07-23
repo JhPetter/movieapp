@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun configTabBar() {
-        tabsList.add(getString(R.string.popular))
+        tabsList.add(getString(R.string.movies))
         tabsList.add(getString(R.string.series))
         viewPagerAdapter = ViewPagerAdapter(
             supportFragmentManager,
