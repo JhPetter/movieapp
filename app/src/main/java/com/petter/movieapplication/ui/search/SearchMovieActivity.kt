@@ -6,14 +6,14 @@ import android.os.Bundle
 import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.petter.entities.Movie
 import com.petter.entities.MovieType
 import com.petter.movieapplication.databinding.ActivitySearchMovieBinding
 import com.petter.movieapplication.ui.detail.DetailActivity
+import com.petter.movieapplication.utils.EndLessRecycler
 import com.petter.movieapplication.utils.MOVIE_TYPE
+import com.petter.movieapplication.utils.hideKeyboardFrom
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class SearchMovieActivity : AppCompatActivity() {
@@ -38,10 +38,18 @@ class SearchMovieActivity : AppCompatActivity() {
     }
 
     private fun setUpView() {
+        searchViewModel.setMovieType(fetchMovieType())
         binding.searchResults.adapter = movieAdapter
+        binding.searchResults.addOnScrollListener(object : EndLessRecycler() {
+            override fun onLoadNextPage() {
+                searchViewModel.loadNextPage()
+            }
+        })
         binding.searchQuery.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH)
-                searchViewModel.search(binding.searchQuery.text.toString(), fetchMovieType())
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                searchViewModel.search(binding.searchQuery.text.toString())
+                this.hideKeyboardFrom(binding.searchQuery)
+            }
             true
         }
     }
@@ -50,10 +58,8 @@ class SearchMovieActivity : AppCompatActivity() {
         MovieType.valueOf(intent.getStringExtra(MOVIE_TYPE) ?: MovieType.MOVIES.name)
 
     private fun observer() {
-        lifecycleScope.launchWhenStarted {
-            searchViewModel.movieListStateFlow.collect {
-                movieAdapter.submitList(it)
-            }
+        searchViewModel.myMoviesLiveData.observe(this) {
+            movieAdapter.addData(it)
         }
     }
 

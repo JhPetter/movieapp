@@ -1,6 +1,10 @@
 package com.petter.movieapplication.utils
 
+import android.app.Activity
+import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import androidx.core.net.toUri
 import com.bumptech.glide.Glide
@@ -31,4 +35,9 @@ fun ChipGroup.addChips(layoutInflater: LayoutInflater, values: List<String>) {
             }
         addView(chip)
     }
+}
+
+fun Context.hideKeyboardFrom(view: View) {
+    val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.hideSoftInputFromWindow(view.windowToken, 0)
 }

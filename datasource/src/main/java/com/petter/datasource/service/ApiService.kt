@@ -23,6 +23,7 @@ interface ApiService {
     @GET("search/{movieType}")
     fun search(
         @Path("movieType") movieType: String,
-        @Query("query") query: String
+        @Query("query") query: String,
+        @Query("page") page: Int
     ): Single<MoviesResponse>
 }
