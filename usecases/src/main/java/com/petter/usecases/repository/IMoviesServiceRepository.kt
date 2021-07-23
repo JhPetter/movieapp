@@ -9,5 +9,5 @@ import io.reactivex.rxjava3.core.Single
 interface IMoviesServiceRepository {
     fun fetchMovies(movieType: MovieType, movieCategory: MovieCategory): Single<MoviePage>
     fun fetchMovie(movieId: Int, movieType: MovieType): Single<Movie>
-    fun searchMovies(query: String): Single<MoviePage>
+    fun searchMovies(movieType: MovieType,query: String): Single<MoviePage>
 }

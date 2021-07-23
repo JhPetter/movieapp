@@ -7,6 +7,7 @@ import com.petter.entities.MovieType
 import com.petter.movieapplication.R
 import com.petter.movieapplication.databinding.ActivityMainBinding
 import com.petter.movieapplication.ui.movie.MovieFragment
+import com.petter.movieapplication.ui.search.SearchMovieActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,6 +19,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.homeSearch.setOnClickListener {
+            SearchMovieActivity.start(this, MovieType.MOVIES)
+        }
         configTabBar()
     }
 

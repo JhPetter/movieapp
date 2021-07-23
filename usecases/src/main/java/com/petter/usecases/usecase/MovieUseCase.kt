@@ -8,10 +8,16 @@ import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
 class MovieUseCase @Inject constructor(private val iMoviesServiceRepository: IMoviesServiceRepository) {
-    fun fetchMovies(movieType: MovieType, movieCategory: MovieCategory): Single<MoviePage> =
+    fun fetchMovies(
+        movieType: MovieType,
+        movieCategory: MovieCategory,
+        page: Int = 1
+    ): Single<MoviePage> =
         iMoviesServiceRepository.fetchMovies(movieType, movieCategory)
 
-    fun fetchMovie(movieId: Int,movieType: MovieType) = iMoviesServiceRepository.fetchMovie(movieId,movieType)
+    fun fetchMovie(movieId: Int, movieType: MovieType) =
+        iMoviesServiceRepository.fetchMovie(movieId, movieType)
 
-    fun searchMovies(query: String) = iMoviesServiceRepository.searchMovies(query)
+    fun searchMovies(movieType: MovieType, query: String, page: Int = 1) =
+        iMoviesServiceRepository.searchMovies(movieType, query)
 }

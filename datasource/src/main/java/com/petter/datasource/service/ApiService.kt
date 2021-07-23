@@ -20,6 +20,9 @@ interface ApiService {
         @Path("movieId") movieId: Int
     ): Single<MovieResponse>
 
-    @GET("search/movie")
-    fun search(@Query("query") query: String): Single<MoviesResponse>
+    @GET("search/{movieType}")
+    fun search(
+        @Path("movieType") movieType: String,
+        @Query("query") query: String
+    ): Single<MoviesResponse>
 }

@@ -2,9 +2,9 @@ package com.petter.movieapplication.ui.movie
 
 import android.view.View
 import androidx.lifecycle.ViewModel
-import com.petter.entities.Movie
 import com.petter.entities.MovieCategory
 import com.petter.entities.MovieType
+import com.petter.movieapplication.viewobjects.MovieVO
 import com.petter.usecases.usecase.MovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -18,14 +18,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(private val movieUseCase: MovieUseCase) : ViewModel() {
-    private val _popularMovieListStateFlow: MutableStateFlow<List<Movie>> by lazy {
-        MutableStateFlow(arrayListOf())
+    private val _movieVOStateFlow: MutableStateFlow<MovieVO> by lazy {
+        MutableStateFlow(MovieVO(arrayListOf(), arrayListOf()))
     }
-    val popularMovieListStateFlow: StateFlow<List<Movie>> get() = _popularMovieListStateFlow
-    private val _topRateMovieListStateFlow: MutableStateFlow<List<Movie>> by lazy {
-        MutableStateFlow(arrayListOf())
-    }
-    val topRateMovieListSateFlow: StateFlow<List<Movie>> get() = _topRateMovieListStateFlow
+    val movieVOStateFlow: StateFlow<MovieVO> get() = _movieVOStateFlow
+
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     private val _moviesLoadingStateFlow: MutableStateFlow<Int> by lazy {
@@ -38,25 +35,33 @@ class MainViewModel @Inject constructor(private val movieUseCase: MovieUseCase) 
     }
     val showMoviesSateFlow: StateFlow<Int> get() = _showMoviesStateFlow
 
-    fun fetchMovies(movieType: MovieType) {
-        _moviesLoadingStateFlow.value = View.VISIBLE
-        _showMoviesStateFlow.value = View.GONE
-        Single.zip(
+    fun fetchMovies(movieType: MovieType): Single<MovieVO> {
+        return Single.zip(
             movieUseCase.fetchMovies(movieType, MovieCategory.POPULAR),
             movieUseCase.fetchMovies(movieType, MovieCategory.TOP_RATE),
             { popularMovies, topRatedMovies ->
-                _popularMovieListStateFlow.value = popularMovies.movies
-                _topRateMovieListStateFlow.value = topRatedMovies.movies
-                _moviesLoadingStateFlow.value = View.GONE
-                _showMoviesStateFlow.value = View.VISIBLE
-            }).subscribeOn(Schedulers.io())
+                MovieVO(popularMovies.movies, topRatedMovies.movies)
+            })
+    }
+
+    fun fetchMovieObject(movieType: MovieType) {
+        _moviesLoadingStateFlow.value = View.VISIBLE
+        _showMoviesStateFlow.value = View.GONE
+        val single = fetchMovies(movieType)
+            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
+                onSuccess = {
+                    _movieVOStateFlow.value = it
+                    _moviesLoadingStateFlow.value = View.GONE
+                    _showMoviesStateFlow.value = View.VISIBLE
+                },
                 onError = {
                     _moviesLoadingStateFlow.value = View.GONE
                     _showMoviesStateFlow.value = View.GONE
                 }
             )
+        compositeDisposable.add(single)
     }
 
     override fun onCleared() {

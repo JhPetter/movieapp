@@ -31,7 +31,7 @@ class MovieFragment : Fragment() {
             movieType = MovieType.valueOf(it.getString(MOVIE_TYPE, MovieType.MOVIES.name))
         }
         observeFlows()
-        viewModel.fetchMovies(movieType)
+        viewModel.fetchMovieObject(movieType)
 
     }
 
@@ -50,14 +50,14 @@ class MovieFragment : Fragment() {
             moviePopularRecyclerView.adapter = popularAdapter
             movieSeeAllTopRated.setOnClickListener {
                 openFullList(
-                    ArrayList(viewModel.topRateMovieListSateFlow.value),
+                    ArrayList(viewModel.movieVOStateFlow.value.topRateMovies),
                     MovieCategory.TOP_RATE,
                     movieType
                 )
             }
             movieSeeAllPopular.setOnClickListener {
                 openFullList(
-                    ArrayList(viewModel.popularMovieListStateFlow.value),
+                    ArrayList(viewModel.movieVOStateFlow.value.popularMovies),
                     MovieCategory.POPULAR,
                     movieType
                 )
@@ -67,13 +67,9 @@ class MovieFragment : Fragment() {
 
     private fun observeFlows() {
         lifecycleScope.launchWhenStarted {
-            viewModel.topRateMovieListSateFlow.collect {
-                topRateAdapter.items = it
-            }
-        }
-        lifecycleScope.launchWhenStarted {
-            viewModel.popularMovieListStateFlow.collect {
-                popularAdapter.items = it
+            viewModel.movieVOStateFlow.collect {
+                popularAdapter.items = it.popularMovies
+                topRateAdapter.items = it.topRateMovies
             }
         }
         lifecycleScope.launchWhenStarted {

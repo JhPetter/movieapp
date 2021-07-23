@@ -32,8 +32,8 @@ class MovieService @Inject constructor(
             .onErrorResumeNext { Single.error(Exception("Its local exception")) }
     }
 
-    override fun searchMovies(query: String): Single<MoviePage> {
-        return iApiService.search(query)
+    override fun searchMovies(movieType: MovieType, query: String): Single<MoviePage> {
+        return iApiService.search(movieType.key, query)
             .map { moviePageMapper.invoke(it) }
             .onErrorResumeNext { Single.error(Exception("Its local exception")) }
     }

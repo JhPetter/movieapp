@@ -13,6 +13,7 @@ import com.petter.movieapplication.R
 import com.petter.movieapplication.databinding.ActivityListMovieBinding
 import com.petter.movieapplication.ui.detail.DetailActivity
 import com.petter.movieapplication.ui.movie.MainMovieAdapter
+import com.petter.movieapplication.ui.search.SearchMovieActivity
 import com.petter.movieapplication.utils.MOVIES
 import com.petter.movieapplication.utils.MOVIE_CATEGORY
 import com.petter.movieapplication.utils.MOVIE_TYPE
@@ -55,7 +56,12 @@ class ListMovieActivity : AppCompatActivity() {
         with(binding.listRecycler) {
             adapter = movieAdapter
         }
-        binding.listSearch.hint = "${getString(R.string.search)} ${movieType.name.lowercase()}"
+        with(binding.listSearch) {
+            hint = "${getString(R.string.search)} ${movieType.name.lowercase()}"
+            setOnClickListener {
+                SearchMovieActivity.start(this@ListMovieActivity, movieType)
+            }
+        }
     }
 
     private fun loadData() {

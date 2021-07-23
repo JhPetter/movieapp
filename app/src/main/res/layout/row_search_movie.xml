@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    tools:background="@color/primary">
+
+    <com.petter.movieapplication.components.ImageViewAspectRatio
+        android:id="@+id/searchMovieImage"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:ratio="1.5"
+        app:shapeAppearance="@style/ShapeAppearanceMovie"
+        tools:src="@drawable/black_widow" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/searchMovieTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:minLines="1"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/searchMovieImage"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Black Widow" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/searchMovieShortSummary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:minLines="1"
+        android:textColor="@color/light_2"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/searchMovieImage"
+        app:layout_constraintTop_toBottomOf="@id/searchMovieTitle"
+        tools:text="La Viuda Negra is a 2014 Spanish-language telenovela produced by RTI Producciones and Televisa for United States-based television network Univisión and for Colombia-based television network Caracol Television. It is an adaptation of the book La patrona de Pablo Escobar de José Guarnizo based on history from Griselda Blanco." />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/searchMovieRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:drawableStart="@drawable/ic_start"
+        android:drawablePadding="8dp"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toEndOf="@id/searchMovieImage"
+        app:layout_constraintTop_toBottomOf="@id/searchMovieShortSummary"
+        tools:text="6.5" />
+</androidx.constraintlayout.widget.ConstraintLayout>
