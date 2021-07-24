@@ -23,20 +23,15 @@ class MovieService @Inject constructor(
     ): Single<MoviePage> {
         return iApiService.fetchMovies(movieType.key, movieCategory.key, page)
             .map { moviePageMapper.invoke(it) }
-            .onErrorResumeNext { Single.error(Exception("Its local exception")) }
     }
 
     override fun fetchMovie(movieId: Int, movieType: MovieType): Single<Movie> {
         return iApiService.fetchMovie(movieType.key, movieId)
             .map { movieMapper.invoke(it) }
-            .onErrorResumeNext { Single.error(Exception("Its local exception")) }
     }
 
     override fun searchMovies(movieType: MovieType, query: String, page: Int): Single<MoviePage> {
         return iApiService.search(movieType.key, query, page)
             .map { moviePageMapper.invoke(it) }
-            .onErrorResumeNext {
-                Single.error(Exception(it.message))
-            }
     }
 }

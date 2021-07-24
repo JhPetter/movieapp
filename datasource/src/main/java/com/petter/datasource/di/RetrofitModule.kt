@@ -1,10 +1,12 @@
 package com.petter.datasource.di
 
+import android.content.Context
 import com.petter.datasource.service.ApiService
 import com.petter.datasource.util.ApiInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -19,8 +21,11 @@ import javax.inject.Named
 class RetrofitModule {
 
     @Provides
-    fun provideApiInterceptor(@Named("api_key") apiKey: String): ApiInterceptor =
-        ApiInterceptor(apiKey)
+    fun provideApiInterceptor(
+        @Named("api_key") apiKey: String,
+        @ApplicationContext appContext: Context
+    ): ApiInterceptor =
+        ApiInterceptor(apiKey, appContext)
 
     @Provides
     fun provideOkHttpClient(
