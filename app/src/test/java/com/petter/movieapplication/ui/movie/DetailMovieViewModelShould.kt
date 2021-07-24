@@ -32,6 +32,7 @@ class DetailMovieViewModelShould {
     private val movieId = 1
     private val movieType: MovieType = mock()
     private val movieResult: Movie = mock()
+    private val exception = RuntimeException("Sometimes wrong")
 
     @Test
     fun getDetailMovieFromUseCase() {
@@ -61,6 +62,18 @@ class DetailMovieViewModelShould {
         assertEquals(viewModel.detailDataSateFlow.value, View.GONE)
         viewModel.fetchMovieById(movieId, movieType)
         assertEquals(viewModel.detailDataSateFlow.value, View.VISIBLE)
+    }
+
+    @Test
+    fun emitErrorWhenReceiveError() {
+        val viewModel = mockError()
+        viewModel.fetchMovieById(movieId, movieType)
+        assertEquals(exception.message, viewModel.errorLiveData.value?.message)
+    }
+
+    private fun mockError(): DetailMovieViewModel {
+        whenever(movieUseCase.fetchMovie(movieId, movieType)).thenReturn(Single.error(exception))
+        return DetailMovieViewModel(movieUseCase)
     }
 
     private fun mockSuccess(): DetailMovieViewModel {

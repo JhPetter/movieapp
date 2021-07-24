@@ -33,6 +33,7 @@ class SearchViewModelShould {
     private val query: String = "Marvel"
     private val movieType: MovieType = mock()
     private val page = 1
+    private val exception = RuntimeException("Sometimes wrong")
     private val moviePage: MoviePage = MoviePage(
         2, arrayListOf(
             Movie(
@@ -77,9 +78,28 @@ class SearchViewModelShould {
         assertEquals(searchViewModel.myMoviesLiveData.value?.size, 2)
     }
 
+    @Test
+    fun emitErrorWhenReceiveError() {
+        val viewModel = mockError()
+        viewModel.search(query)
+        assertEquals(exception.message, viewModel.errorLiveData.value?.message)
+    }
+
+
     private fun mockSuccess(): SearchViewModel {
         whenever(movieUseCase.searchMovies(movieType, query, page)).thenReturn(
             Single.just(moviePage)
+        )
+        val viewModel = SearchViewModel(movieUseCase)
+        viewModel.setMovieType(movieType)
+        return viewModel
+    }
+
+    private fun mockError(): SearchViewModel {
+        whenever(movieUseCase.searchMovies(movieType, query, page)).thenReturn(
+            Single.error(
+                exception
+            )
         )
         val viewModel = SearchViewModel(movieUseCase)
         viewModel.setMovieType(movieType)

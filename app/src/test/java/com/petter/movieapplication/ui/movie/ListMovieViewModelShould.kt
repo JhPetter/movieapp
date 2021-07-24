@@ -33,6 +33,7 @@ class ListMovieViewModelShould {
     private val movieUseCase: MovieUseCase = mock()
     private val movieType: MovieType = mock()
     private val movieCategory: MovieCategory = mock()
+    private val exception = RuntimeException("Sometimes wrong")
     private val moviePage: MoviePage = MoviePage(
         2, arrayListOf(
             Movie(
@@ -85,6 +86,18 @@ class ListMovieViewModelShould {
         assertEquals(listViewModel.myMoviesLiveData.value?.size, 2)
     }
 
+    @Test
+    fun emitErrorWhenReceiveError() {
+        val listViewModel = mockError()
+        listViewModel.config(listOfMovies, movieCategory, movieType)
+        listViewModel.loadNextPage()
+        assertEquals(exception.message, listViewModel.errorLiveData.value?.message)
+    }
+
+    private fun mockError(): ListMovieViewModel {
+        whenever(movieUseCase.fetchMovies(movieType, movieCategory, page)).thenReturn(Single.error(exception))
+        return ListMovieViewModel(movieUseCase)
+    }
 
     private fun mockSuccess(): ListMovieViewModel {
         whenever(movieUseCase.fetchMovies(movieType, movieCategory, page)).thenReturn(

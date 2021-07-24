@@ -32,6 +32,7 @@ class MainMoviesViewModelShould {
 
     private val movieUseCase: MovieUseCase = mock()
     private val movieType: MovieType = mock()
+    private val exception = RuntimeException("Sometimes wrong")
     private val mockMovies: MoviePage = MoviePage(
         1,
         arrayListOf(
@@ -97,6 +98,23 @@ class MainMoviesViewModelShould {
         assertEquals(viewModel.showMoviesSateFlow.value, View.GONE)
         viewModel.fetchMovieObject(movieType)
         assertEquals(viewModel.showMoviesSateFlow.value, View.VISIBLE)
+    }
+
+    @Test
+    fun emitErrorWhenReceiveError() {
+        val viewModel = mockError()
+        viewModel.fetchMovieObject(movieType)
+        assertEquals(exception.message, viewModel.errorLiveData.value?.message)
+    }
+
+    private fun mockError(): MainViewModel {
+        whenever(movieUseCase.fetchMovies(movieType, MovieCategory.TOP_RATE)).thenReturn(
+            Single.error(exception)
+        )
+        whenever(movieUseCase.fetchMovies(movieType, MovieCategory.POPULAR)).thenReturn(
+            Single.error(exception)
+        )
+        return MainViewModel(movieUseCase)
     }
 
     private fun mockSuccess(): MainViewModel {
