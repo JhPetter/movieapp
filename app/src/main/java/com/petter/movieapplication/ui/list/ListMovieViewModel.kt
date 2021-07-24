@@ -28,6 +28,7 @@ class ListMovieViewModel @Inject constructor(private val moviesUseCase: MovieUse
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     fun config(movies: List<Movie>, movieCategory: MovieCategory, movieType: MovieType) {
+        lastMoviePage = MoviePage(1, movies, 2)
         mutableList.addAll(movies)
         this.movieCategory = movieCategory
         this.movieType = movieType
@@ -35,8 +36,6 @@ class ListMovieViewModel @Inject constructor(private val moviesUseCase: MovieUse
     }
 
     fun loadNextPage() {
-        if (lastMoviePage == null)
-            fetchNewData(page = 2)
         val page = (lastMoviePage?.page ?: 1) + 1
         if (page <= lastMoviePage?.totalPages ?: 1)
             fetchNewData(page)

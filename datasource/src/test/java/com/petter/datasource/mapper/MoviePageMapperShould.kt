@@ -1,7 +1,5 @@
-package com.petter.datasource.source
+package com.petter.datasource.mapper
 
-import com.petter.datasource.mapper.MoviePageMapper
-import com.petter.datasource.mapper.MoviesListMapper
 import com.petter.datasource.model.response.MoviesResponse
 import junit.framework.TestCase
 import org.junit.Test

@@ -31,11 +31,11 @@ class MainViewModel @Inject constructor(private val movieUseCase: MovieUseCase) 
     val moviesLoadingSateFlow: StateFlow<Int> get() = _moviesLoadingStateFlow
 
     private val _showMoviesStateFlow: MutableStateFlow<Int> by lazy {
-        MutableStateFlow(View.VISIBLE)
+        MutableStateFlow(View.GONE)
     }
     val showMoviesSateFlow: StateFlow<Int> get() = _showMoviesStateFlow
 
-    fun fetchMovies(movieType: MovieType): Single<MovieVO> {
+    private fun fetchMovies(movieType: MovieType): Single<MovieVO> {
         return Single.zip(
             movieUseCase.fetchMovies(movieType, MovieCategory.POPULAR),
             movieUseCase.fetchMovies(movieType, MovieCategory.TOP_RATE),

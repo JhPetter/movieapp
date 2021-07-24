@@ -31,7 +31,7 @@ class DetailMovieViewModel @Inject constructor(private val movieUseCase: MovieUs
     val detailLoadingSateFlow: StateFlow<Int> get() = _detailLoadingStateFlow
 
     private val _detailDataStateFlow: MutableStateFlow<Int> by lazy {
-        MutableStateFlow(View.VISIBLE)
+        MutableStateFlow(View.GONE)
     }
     val detailDataSateFlow: StateFlow<Int> get() = _detailDataStateFlow
 

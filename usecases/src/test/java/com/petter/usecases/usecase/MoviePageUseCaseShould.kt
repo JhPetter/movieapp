@@ -16,6 +16,7 @@ class MoviePageUseCaseShould {
     private val category: MovieCategory = mock()
     private val movieType: MovieType = mock()
     private val moviePage: MoviePage = mock()
+    private val page: Int = 1
     private val runtimeException = RuntimeException("Its local exception")
 
     @Test
@@ -24,7 +25,7 @@ class MoviePageUseCaseShould {
         movieUseCase.fetchMovies(movieType, category).test()
             .assertComplete()
             .assertNoErrors()
-        verify(iMovieServiceRepository, times(1)).fetchMovies(movieType, category)
+        verify(iMovieServiceRepository, times(1)).fetchMovies(movieType, category, page)
     }
 
     @Test
@@ -36,7 +37,7 @@ class MoviePageUseCaseShould {
     }
 
     private fun mockSuccess(): MovieUseCase {
-        whenever(iMovieServiceRepository.fetchMovies(movieType, category)).thenReturn(
+        whenever(iMovieServiceRepository.fetchMovies(movieType, category, page)).thenReturn(
             Single.just(
                 moviePage
             )
@@ -45,7 +46,7 @@ class MoviePageUseCaseShould {
     }
 
     private fun mockError(): MovieUseCase {
-        whenever(iMovieServiceRepository.fetchMovies(movieType, category)).thenReturn(
+        whenever(iMovieServiceRepository.fetchMovies(movieType, category, page)).thenReturn(
             Single.error(runtimeException)
         )
         return MovieUseCase(iMovieServiceRepository)
