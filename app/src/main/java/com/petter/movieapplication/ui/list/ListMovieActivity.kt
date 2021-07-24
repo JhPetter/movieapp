@@ -5,11 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LiveData
 import com.petter.entities.Movie
 import com.petter.entities.MovieCategory
 import com.petter.entities.MovieType
 import com.petter.movieapplication.R
 import com.petter.movieapplication.databinding.ActivityListMovieBinding
+import com.petter.movieapplication.ui.BaseActivity
 import com.petter.movieapplication.ui.detail.DetailActivity
 import com.petter.movieapplication.ui.movie.MainMovieAdapter
 import com.petter.movieapplication.ui.search.SearchMovieActivity
@@ -20,7 +22,7 @@ import com.petter.movieapplication.utils.MOVIE_TYPE
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ListMovieActivity : AppCompatActivity() {
+class ListMovieActivity : BaseActivity() {
     private lateinit var binding: ActivityListMovieBinding
 
     private val listViewModel: ListMovieViewModel by viewModels()
@@ -67,6 +69,8 @@ class ListMovieActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun fetchErrorToObserve(): LiveData<Throwable> = listViewModel.errorLiveData
 
     private fun loadData() {
         val moviePage: List<Movie> =

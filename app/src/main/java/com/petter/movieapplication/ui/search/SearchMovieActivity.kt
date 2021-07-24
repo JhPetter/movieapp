@@ -6,9 +6,11 @@ import android.os.Bundle
 import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LiveData
 import com.petter.entities.Movie
 import com.petter.entities.MovieType
 import com.petter.movieapplication.databinding.ActivitySearchMovieBinding
+import com.petter.movieapplication.ui.BaseActivity
 import com.petter.movieapplication.ui.detail.DetailActivity
 import com.petter.movieapplication.utils.EndLessRecycler
 import com.petter.movieapplication.utils.MOVIE_TYPE
@@ -16,7 +18,7 @@ import com.petter.movieapplication.utils.hideKeyboardFrom
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SearchMovieActivity : AppCompatActivity() {
+class SearchMovieActivity : BaseActivity() {
     private lateinit var binding: ActivitySearchMovieBinding
     private val searchViewModel: SearchViewModel by viewModels()
     private val movieAdapter: SearchMovieAdapter by lazy { SearchMovieAdapter(this::openDetail) }
@@ -53,6 +55,8 @@ class SearchMovieActivity : AppCompatActivity() {
             true
         }
     }
+
+    override fun fetchErrorToObserve(): LiveData<Throwable> = searchViewModel.errorLiveData
 
     private fun fetchMovieType(): MovieType =
         MovieType.valueOf(intent.getStringExtra(MOVIE_TYPE) ?: MovieType.MOVIES.name)

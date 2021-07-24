@@ -47,5 +47,4 @@ class MainActivity : AppCompatActivity() {
             tab.text = tabsList[position].name
         }.attach()
     }
-
 }

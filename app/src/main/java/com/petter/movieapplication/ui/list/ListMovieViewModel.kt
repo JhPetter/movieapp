@@ -2,11 +2,11 @@ package com.petter.movieapplication.ui.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.petter.entities.Movie
 import com.petter.entities.MovieCategory
 import com.petter.entities.MoviePage
 import com.petter.entities.MovieType
+import com.petter.movieapplication.ui.BaseViewModel
 import com.petter.usecases.usecase.MovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ListMovieViewModel @Inject constructor(private val moviesUseCase: MovieUseCase) :
-    ViewModel() {
+    BaseViewModel() {
     private var movieCategory: MovieCategory = MovieCategory.POPULAR
     private var movieType: MovieType = MovieType.TV
     private val _myMoviesLiveData: MutableLiveData<List<Movie>> by lazy { MutableLiveData<List<Movie>>() }
@@ -52,7 +52,7 @@ class ListMovieViewModel @Inject constructor(private val moviesUseCase: MovieUse
                     _myMoviesLiveData.postValue(mutableList)
                 },
                 onError = {
-                    it.printStackTrace()
+                    fetchError(it)
                 }
             )
         compositeDisposable.add(single)

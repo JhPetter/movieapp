@@ -8,5 +8,6 @@
     <string name="popular">Popular</string>
     <string name="summary">Summary</string>
     <string name="understand">Entendido</string>
+    <string name="an_error_happened">An error happened</string>
 
 </resources>

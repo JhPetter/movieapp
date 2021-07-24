@@ -2,10 +2,10 @@ package com.petter.movieapplication.ui.search
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.petter.entities.Movie
 import com.petter.entities.MoviePage
 import com.petter.entities.MovieType
+import com.petter.movieapplication.ui.BaseViewModel
 import com.petter.usecases.usecase.MovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -15,7 +15,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(private val movieUseCase: MovieUseCase) : ViewModel() {
+class SearchViewModel @Inject constructor(private val movieUseCase: MovieUseCase) : BaseViewModel() {
 
     private val _myMoviesLiveData: MutableLiveData<List<Movie>> by lazy { MutableLiveData<List<Movie>>() }
     val myMoviesLiveData: LiveData<List<Movie>> get() = _myMoviesLiveData
@@ -59,7 +59,7 @@ class SearchViewModel @Inject constructor(private val movieUseCase: MovieUseCase
                     _myMoviesLiveData.postValue(mutableList)
                 },
                 onError = {
-                    it.printStackTrace()
+                    fetchError(it)
                 }
             )
         compositeDisposable.add(single)

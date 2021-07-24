@@ -1,9 +1,9 @@
 package com.petter.movieapplication.ui.movie
 
 import android.view.View
-import androidx.lifecycle.ViewModel
 import com.petter.entities.MovieCategory
 import com.petter.entities.MovieType
+import com.petter.movieapplication.ui.BaseViewModel
 import com.petter.movieapplication.viewobjects.MovieVO
 import com.petter.usecases.usecase.MovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val movieUseCase: MovieUseCase) : ViewModel() {
+class MainViewModel @Inject constructor(private val movieUseCase: MovieUseCase) : BaseViewModel() {
     private val _movieVOStateFlow: MutableStateFlow<MovieVO> by lazy {
         MutableStateFlow(MovieVO(arrayListOf(), arrayListOf()))
     }
@@ -57,6 +57,7 @@ class MainViewModel @Inject constructor(private val movieUseCase: MovieUseCase) 
                     _showMoviesStateFlow.value = View.VISIBLE
                 },
                 onError = {
+                    fetchError(it)
                     _moviesLoadingStateFlow.value = View.GONE
                     _showMoviesStateFlow.value = View.GONE
                 }

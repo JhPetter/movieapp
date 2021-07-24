@@ -18,4 +18,17 @@
         <item name="rippleColor">@android:color/transparent</item>
         <item name="android:textColor">@color/yellow</item>
     </style>
+
+    <style name="CrossDialog" parent="Theme.MaterialComponents.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="colorPrimary">@color/dark_transparent_01</item>
+        <item name="colorPrimaryDark">@color/dark_transparent_01</item>
+        <item name="colorAccent">@color/dark_transparent_01</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowTitleStyle">@null</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowBackground">@color/dark_transparent_01</item>
+    </style>
 </resources>

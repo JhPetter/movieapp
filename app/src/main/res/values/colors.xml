@@ -6,4 +6,5 @@
     <color name="dark">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="yellow">#ffb302</color>
+    <color name="dark_transparent_01">#B20A0A0C</color>
 </resources>

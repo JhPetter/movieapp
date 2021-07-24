@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import com.petter.entities.Movie
 import com.petter.entities.MovieCategory
 import com.petter.entities.MovieType
+import com.petter.movieapplication.components.CrossDialog
 import com.petter.movieapplication.databinding.FragmentMovieBinding
 import com.petter.movieapplication.ui.detail.DetailActivity
 import com.petter.movieapplication.ui.list.ListMovieActivity
@@ -32,7 +33,6 @@ class MovieFragment : Fragment() {
         }
         observeFlows()
         viewModel.fetchMovieObject(movieType)
-
     }
 
     override fun onCreateView(
@@ -88,6 +88,14 @@ class MovieFragment : Fragment() {
                     movieSeeAllPopular.visibility = it
                     movieSeeAllTopRated.visibility = it
                 }
+            }
+        }
+        lifecycleScope.launchWhenStarted {
+            viewModel.errorLiveData.observe(viewLifecycleOwner) {
+                CrossDialog(it.message ?: "").show(
+                    childFragmentManager,
+                    CrossDialog::class.java.name
+                )
             }
         }
     }

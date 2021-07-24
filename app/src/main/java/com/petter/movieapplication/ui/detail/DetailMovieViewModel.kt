@@ -3,9 +3,9 @@ package com.petter.movieapplication.ui.detail
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.petter.entities.Movie
 import com.petter.entities.MovieType
+import com.petter.movieapplication.ui.BaseViewModel
 import com.petter.usecases.usecase.MovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailMovieViewModel @Inject constructor(private val movieUseCase: MovieUseCase) :
-    ViewModel() {
+    BaseViewModel() {
 
     private val _movieLiveData: MutableLiveData<Movie> by lazy { MutableLiveData() }
     val movieLiveData: LiveData<Movie> get() = _movieLiveData
@@ -50,7 +50,7 @@ class DetailMovieViewModel @Inject constructor(private val movieUseCase: MovieUs
                     _detailDataStateFlow.value = View.VISIBLE
                 },
                 onError = {
-                    println(it.stackTrace)
+                    fetchError(it)
                     _detailLoadingStateFlow.value = View.GONE
                     _detailDataStateFlow.value = View.VISIBLE
                 }

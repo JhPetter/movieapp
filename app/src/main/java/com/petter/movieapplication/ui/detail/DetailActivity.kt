@@ -4,17 +4,18 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.lifecycleScope
 import com.petter.entities.Movie
 import com.petter.entities.MovieType
 import com.petter.movieapplication.databinding.ActivityDetailBinding
+import com.petter.movieapplication.ui.BaseActivity
 import com.petter.movieapplication.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
-class DetailActivity : AppCompatActivity() {
+class DetailActivity : BaseActivity() {
     private lateinit var binding: ActivityDetailBinding
     private val detailViewModel: DetailMovieViewModel by viewModels()
 
@@ -66,6 +67,8 @@ class DetailActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun fetchErrorToObserve(): LiveData<Throwable> = detailViewModel.errorLiveData
 
     private fun configMovie(movie: Movie) {
         with(binding) {
